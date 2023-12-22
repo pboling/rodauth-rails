@@ -39,6 +39,25 @@ class RakeTest < ActiveSupport::TestCase
         GET|POST  /admin/webauthn-remove      rodauth(:admin).webauthn_remove_path
         POST      /admin/webauthn-login       rodauth(:admin).webauthn_login_path
 
+        GET|POST  /multi/tenant//login                   rodauth(:multi_tenant).login_path
+        GET|POST  /multi/tenant//create-account          rodauth(:multi_tenant).create_account_path
+        GET|POST  /multi/tenant//verify-account-resend   rodauth(:multi_tenant).verify_account_resend_path
+        GET|POST  /multi/tenant//verify-account          rodauth(:multi_tenant).verify_account_path
+        GET|POST  /multi/tenant//remember                rodauth(:multi_tenant).remember_path
+        GET|POST  /multi/tenant//logout                  rodauth(:multi_tenant).logout_path
+        GET|POST  /multi/tenant//reset-password-request  rodauth(:multi_tenant).reset_password_request_path
+        GET|POST  /multi/tenant//reset-password          rodauth(:multi_tenant).reset_password_path
+        GET|POST  /multi/tenant//change-password         rodauth(:multi_tenant).change_password_path
+        GET|POST  /multi/tenant//change-email            rodauth(:multi_tenant).change_login_path
+        GET|POST  /multi/tenant//close-account           rodauth(:multi_tenant).close_account_path
+        POST      /multi/tenant//unlock-account-request  rodauth(:multi_tenant).unlock_account_request_path
+        GET|POST  /multi/tenant//unlock-account          rodauth(:multi_tenant).unlock_account_path
+        GET|POST  /multi/tenant//multifactor-manage      rodauth(:multi_tenant).two_factor_manage_path
+        GET|POST  /multi/tenant//multifactor-auth        rodauth(:multi_tenant).two_factor_auth_path
+        GET|POST  /multi/tenant//multifactor-disable     rodauth(:multi_tenant).two_factor_disable_path
+        GET|POST  /multi/tenant//recovery-auth           rodauth(:multi_tenant).recovery_auth_path
+        GET|POST  /multi/tenant//recovery-codes          rodauth(:multi_tenant).recovery_codes_path
+
         POST  /jwt/login                  rodauth(:jwt).login_path
         POST  /jwt/create-account         rodauth(:jwt).create_account_path
         POST  /jwt/verify-account-resend  rodauth(:jwt).verify_account_resend_path
