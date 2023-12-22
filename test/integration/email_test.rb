@@ -15,10 +15,37 @@ class EmailTest < IntegrationTest
     assert_includes email.body.to_s, "Someone has created an account with this email address"
   end
 
+  test "mailer delivery - multi-tenant" do
+    register(login: "user@example.com", prefix: "/multi/tenant/animal-farm")
+
+    assert_equal 1, ActionMailer::Base.deliveries.count
+
+    email = ActionMailer::Base.deliveries[0]
+
+    assert_equal "user@example.com",             email[:to].to_s
+    assert_equal "noreply@rodauth.test",         email[:from].to_s
+    assert_equal "[RodauthTest] Verify Account", email[:subject].to_s
+
+    assert_includes email.body.to_s, "Someone has created an account with this email address"
+  end
+
   test "verify login change email" do
     register(login: "user@example.com", password: "secret", verify: true)
 
     visit "/change-login"
+
+    fill_in "Login", with: "new@example.com"
+    fill_in "Password", with: "secret"
+    click_on "Change Login"
+
+    assert_equal 2, ActionMailer::Base.deliveries.count
+  end
+
+  test "verify login change email - multi-tenant" do
+    prefix = "/multi/tenant/kiwi"
+    register(login: "user@example.com", password: "secret", prefix: prefix, verify: true)
+
+    visit "#{prefix}/change-email"
 
     fill_in "Login", with: "new@example.com"
     fill_in "Password", with: "secret"
